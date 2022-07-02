@@ -19,11 +19,11 @@ fi
 alias la='ls -la'
 alias lt='ls -lt'
 alias g='git' 
-alias s='status'
-alias co='checkout'
-alias ps='push'
-alias cm='commit'
-alias pl='pull'
+alias -g s='status'
+alias -g co='checkout'
+alias -g ps='push'
+alias -g cm='commit'
+alias -g pl='pull'
 alias ll='ls -l'
 
 eval "$(rbenv init - zsh)"
@@ -37,3 +37,22 @@ export PATH="/.rbenv/bin:~/.rbenv/shims:$PATH"
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh)"
+
+# git add, commit, pushまで一度に行う
+gish() {
+    # 全てステージにのせる
+    git add -A;
+    # コミット対象のファイルを確認
+    git status;
+    read "yesno?Commit with this content. OK? (y/N): "
+    case "$yesno" in
+    # yes
+    [yY]*) read "msg?Input Commit Message: "; 
+           git commit -m "$msg";
+           CULLENT_BRANCH=`git rev-parse --abbrev-ref HEAD`;
+           git push origin ${CULLENT_BRANCH};;
+    # no
+    *) echo "Quit." ;;
+    esac
+}
+
