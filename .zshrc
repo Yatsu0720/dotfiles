@@ -19,7 +19,7 @@ fi
 alias la='ls -la'
 alias lt='ls -lt'
 alias g='git' 
-alias -g s='status'
+alias gs='status'
 alias -g co='checkout'
 alias -g ps='push'
 alias -g cm='commit'
@@ -55,4 +55,6 @@ gish() {
     *) echo "Quit." ;;
     esac
 }
+
+export XDG_CONFIG_HOME=~/.config
 
